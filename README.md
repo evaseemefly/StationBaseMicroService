@@ -1,0 +1,2 @@
+# StationBaseMicroService
+从台风集合预报路径系统中提取出海洋站基础信息使用fastapi+consul实现微服务和服务发现与注册
