@@ -51,3 +51,14 @@ class StationBaseInfoDataModel(IIdIntModel, IDel, IModel):
     is_in_use: Mapped[bool] = mapped_column(default=False)
     sort: Mapped[int] = mapped_column(default=-1)
     is_in_common_use: Mapped[bool] = mapped_column(default=False)
+
+
+class StationAlertModel(IIdIntModel, IDel, IModel):
+    """
+        警戒潮位model
+    """
+    __tablename__ = 'station_stationalerttidemodel'
+
+    station_code: Mapped[str] = mapped_column(String(50), default=DEFAULT_NAME)
+    tide: Mapped[float] = mapped_column(default=0, nullable=True)
+    alert: Mapped[int] = mapped_column(default=-1)

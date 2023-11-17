@@ -76,3 +76,15 @@ class DistStationTideSchema(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class StationAlertSchema(BaseModel):
+    """
+        + 23-11-17 站点警戒潮位
+    """
+    station_code: str
+    tide: float
+    alert: int
+
+    class Config:
+        orm_mode = True

@@ -8,7 +8,7 @@ from sqlalchemy import select, within_group, distinct
 import arrow
 from config.store_config import StoreConfig
 from mid_model.station import DistStationTideListMidModel
-from models.station import StationForecastRealDataModel, StationAstronomictideRealDataModel, StationBaseInfoDataModel
+from models.station import StationAstronomictideRealDataModel, StationBaseInfoDataModel, StationAlertModel
 from schema.station import StationRegionSchema
 from schema.station_surge import SurgeRealDataSchema, AstronomicTideSchema, StationTotalSurgeSchema, \
     DistStationTotalSurgeSchema, StationSurgeListSchema, DistStationSurgeListSchema, DistStationTideListSchema
@@ -205,3 +205,53 @@ class AstronomicTideDao(BaseDao):
                                                                                              forecast_ts_list=temp_ts_list)
             dist_station_tide_list.append(temp_tide_middelmodel)
         return dist_station_tide_list
+
+
+class AlertDao(BaseDao):
+    """
+        + 23-11-17 加入的警戒潮位 dao
+    """
+
+    def get_station_alert(self, station_code: str) -> List[StationAlertModel]:
+        """
+            获取指定站点的警戒潮位集合
+        :param station_code:
+        :return:
+        """
+        session = self.db.session
+        stmt = select(StationAlertModel).where(StationAlertModel.station_code == station_code)
+        res = session.execute(stmt).scalars().all()
+        return res
+
+    def get_dist_station_alert(self) -> List[Dict]:
+        """
+            + 23-11-17 获取所有站点的警戒潮位集合
+        :return:
+        """
+        session = self.db.session
+        sql_raw: str = text(f"""
+                    SELECT station_code,group_concat(tide) as tide_list,group_concat(alert) as alert_list
+                    FROM station_stationalerttidemodel
+                    group by station_code
+                """)
+        res = session.execute(sql_raw).all()
+        dist_station_alert_list: List[dict] = []
+        for temp in res:
+            temp_code: str = temp.station_code
+            temp_alert_tide: List[int] = []
+            temp_alert_level: List[int] = []
+            if temp.tide_list is not None:
+                temp_tide_str: List[str] = temp.tide_list.split(',')
+                temp_alert_tide = [float(tide) for tide in temp_tide_str]
+                temp_alert_tide.sort()
+            if temp.alert_list is not None:
+                temp_alert_str: List[str] = temp.alert_list.split(',')
+                temp_alert_level = [int(alert) for alert in temp_alert_str]
+                temp_alert_level.sort()
+            temp_station_alert_dict: dict = {
+                'station_code': temp_code,
+                'alert_tide_list': temp_alert_tide,
+                'alert_level_list': temp_alert_level
+            }
+            dist_station_alert_list.append(temp_station_alert_dict)
+        return dist_station_alert_list
