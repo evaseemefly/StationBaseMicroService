@@ -4,18 +4,17 @@ services:
   wd-forecast-server:
     build:
       context: .
-      dockerfile: ./wd_server_file
+      dockerfile: ./docker-file
     image: py37:1.20
-    container_name: wd-forecast-server
+    container_name: station-base-micro-server
     working_dir: /opt/project
     privileged: true
     ports:
-      - "8095:8095"
+      - "8088:8088"
     command:
       - /bin/bash
     tty: true
     volumes:
-      - /home/nmefc/proj/wd_forecast_server:/opt/project
-      - /home/nmefc/data/WIND:/data/local_wind_nwp
+      - /home/nmefc/proj/station_base_micro_server/server:/opt/project
 
 

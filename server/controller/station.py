@@ -21,7 +21,7 @@ def startup_event():
         本控制器组件启动时向consul注册本服务
     :return:
     """
-    server = ConsulRegisterServer('127.0.0.1', 8095, CONSUL_HOST, CONSUL_PORT, SERVICE_NAME)
+    server = ConsulRegisterServer('128.5.9.79', 8088, CONSUL_HOST, CONSUL_PORT, SERVICE_NAME)
     server.register()
     pass
 
