@@ -1,6 +1,6 @@
 COMMON_OPTIONS = {
     'LOGGING': {
-        'LOG_DIR': r'D:\01Proj\StationBaseMicroService\server\logs',
+        'LOG_DIR': r'/opt/project/logs',
         'LOG_FILE': 'logging_{time}.log'
     }
 }
