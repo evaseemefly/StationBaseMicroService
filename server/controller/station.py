@@ -15,6 +15,9 @@ from util.request_log import request_log_decorator, request_timer_consuming_deco
 app = APIRouter()
 
 SERVICE_NAME: str = 'station-base'
+# TODO:[*] 23-12-11 此处应修改为自动获取本机ip
+LOCAL_SERVICE_HOST: str = '128.5.9.79'
+LOCAL_SERVICE_PORT: int = 8088
 
 
 @app.on_event("startup")
@@ -23,7 +26,7 @@ def startup_event():
         本控制器组件启动时向consul注册本服务
     :return:
     """
-    server = ConsulRegisterServer('128.5.9.79', 8088, CONSUL_HOST, CONSUL_PORT, SERVICE_NAME)
+    server = ConsulRegisterServer(LOCAL_SERVICE_HOST, LOCAL_SERVICE_PORT, CONSUL_HOST, CONSUL_PORT, SERVICE_NAME)
     server.register()
     pass
 

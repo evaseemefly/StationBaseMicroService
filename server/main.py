@@ -65,6 +65,7 @@ def init_logging():
     if not pathlib.Path(LOG_DIR).exists():
         pathlib.Path(LOG_DIR).mkdir()
     logger.add(log_full_path, rotation='200KB')
+    logger.info('logger初始化完毕!')
 
     pass
 
