@@ -134,7 +134,6 @@ class AstronomicTideDao(BaseDao):
             AND "station_astronomictidee _realdata".forecast_dt <= :forecast_dt_2 
             ORDER BY "station_astronomictidee _realdata".forecast_dt
         """
-        # TODO:[*] 23-11-16 使用此种方式不行
         stmt = select(StationAstronomictideRealDataModel).where(
             StationAstronomictideRealDataModel.station_code == station_code,
             StationAstronomictideRealDataModel.forecast_dt >= start_dt.datetime,
@@ -143,16 +142,6 @@ class AstronomicTideDao(BaseDao):
         # 结果为 { Row:1}
         # 注意 .scalars()后需要再 .all()
         res = session.execute(stmt).scalars().all()
-        # list_res = list(res)
-        # list(res_stmt)
-        #
-        # query = session.query(StationAstronomictideRealDataModel).filter(
-        #     StationAstronomictideRealDataModel.station_code == station_code,
-        #     StationAstronomictideRealDataModel.forecast_dt >= start_dt.datetime,
-        #     StationAstronomictideRealDataModel.forecast_dt <= end_dt.datetime).order_by(
-        #     StationAstronomictideRealDataModel.forecast_dt)
-        # # 方式2 执行后的结果每一个都是 StationAstronomictideRealDataModel
-        # res = query.all()
         return res
 
     def get_dist_tide_range(self, start_dt: arrow.Arrow, end_dt: arrow.Arrow) -> List[DistStationTideListMidModel]:

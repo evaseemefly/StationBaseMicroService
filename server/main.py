@@ -2,14 +2,18 @@
 
 # 按 Ctrl+F5 执行或将其替换为您的代码。
 # 按 双击 Shift 在所有地方搜索类、文件、工具窗口、操作和设置。
+import pathlib
+
 from fastapi import FastAPI
 # cors
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import typer
+from loguru import logger
 
 # 项目文件
 from application import urls
+from config.common_config import LOG_DIR, LOG_FILE
 
 shell_app = typer.Typer()
 
@@ -47,6 +51,24 @@ def init_app():
     return app
 
 
+def init_logging():
+    """
+        + 23-12-11
+        完成对于 loguru logging 的配置
+        1- 配置指定目录
+        2- 配置每个日志文件的大小
+    :return:
+    """
+    # 按照文件大小对日志进行切分
+    log_full_path: str = str(pathlib.Path(f'{LOG_DIR}/{LOG_FILE}'))
+    # 判断日志目录是否存在不存在创建
+    if not pathlib.Path(LOG_DIR).exists():
+        pathlib.Path(LOG_DIR).mkdir()
+    logger.add(log_full_path, rotation='200KB')
+
+    pass
+
+
 @shell_app.command()
 def run():
     """
@@ -56,6 +78,7 @@ def run():
 
 
 def main():
+    init_logging()
     shell_app()
 
 
