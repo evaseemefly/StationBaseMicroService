@@ -26,6 +26,7 @@ def startup_event():
         本控制器组件启动时向consul注册本服务
     :return:
     """
+    # TODO:[*] 24-04-23 测试暂时注释掉
     server = ConsulRegisterServer(LOCAL_SERVICE_HOST, LOCAL_SERVICE_PORT, CONSUL_HOST, CONSUL_PORT, SERVICE_NAME)
     server.register()
     pass

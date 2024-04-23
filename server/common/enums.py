@@ -32,3 +32,13 @@ class ForecastProductTypeEnum(Enum):
     """
     # 预报最大增水场
     FORECAST_MAX_SURGE = 2201
+
+
+class FubTypeEnum(Enum):
+    MOORING_BUOY = 602
+    """摩西浮标"""
+
+
+class FubKindEnum(Enum):
+    LARGE = 611
+    """大型浮标"""
