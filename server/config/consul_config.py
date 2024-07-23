@@ -3,7 +3,8 @@ from util.consul_client import ConsulConfigClient
 # onsul 配置
 CONSUL_OPTIONS = {
     'CONSUL_SERVER': {
-        'HOST': '128.5.9.79',
+        # 'HOST': '128.5.9.79',
+        'HOST': '192.168.0.115',
         'PORT': 8500,
         'MAX_TRY_COUNT': 5
     }

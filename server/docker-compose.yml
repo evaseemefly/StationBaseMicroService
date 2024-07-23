@@ -15,6 +15,6 @@ services:
       - /bin/bash
     tty: true
     volumes:
-      - /home/nmefc/proj/station_base_micro_server/server:/opt/project
+      - /home/surge/proj/station_base_micro_server/server:/opt/project
 
 
