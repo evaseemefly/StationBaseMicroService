@@ -111,8 +111,7 @@ class StationBaseDao(BaseDao):
         """
         session = self.db.session
         stmt = select(StationBaseInfoDataModel).where(
-            StationBaseInfoDataModel.is_abs == False, StationBaseInfoDataModel.is_del == False,
-            StationBaseInfoDataModel.is_in_use == True)
+            StationBaseInfoDataModel.is_abs == False, StationBaseInfoDataModel.is_del == False)
         res = session.execute(stmt).scalars().all()
         return res
 
